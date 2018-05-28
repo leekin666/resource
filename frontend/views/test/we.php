@@ -1,0 +1,875 @@
+<?php
+
+?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/jiaoshi.css" />
+    <title>托福听力</title>
+</head>
+
+<body>
+<!--播放图片-->
+<div class="header">
+    <div class="all_img js-switch">
+        <ul>
+            <li class="active">
+                <img src="/images/123.png" alt="" />
+            </li>
+            <li class="">
+                <img src="/images/a_06.png" alt="" />
+            </li>
+            <li>
+                <img src="/images/123.png" alt="" />
+            </li>
+            <li>
+                <img src="/images/a_06.png" alt="" />
+            </li>
+            <li>
+                <img src="/images/123.png" alt="" />
+            </li>
+            <li>
+                <img src="/images/a_06.png" alt="" />
+            </li>
+        </ul>
+    </div>
+    <div class="num">
+        <span class="current">1</span>/<span class="all">30</span>
+    </div>
+    <!--第一次浏览时的遮盖层-->
+    <dic class="head_shadow hidden">
+        <p class="p1">
+            <img src="/images/ppt-huadong2x.png" />
+        </p>
+        <p class="p2">
+            1.左右滑动可切换ppt <br /> 2.音频和ppt内容是对应的哦
+        </p>
+    </dic>
+</div>
+<!--老师名称 头像显示-->
+<header class="head_teacher">
+    <ul>
+        <li class="li1">
+            <img src="/images/Group 13@2x.png" alt="" />
+        </li>
+        <li class="li2">
+            <p class="t_name">范琳老师</p>
+            <p class="t_mes">
+                <span class="num">500人</span>
+                <!--下面三个只有一个显示  主要是类名不同样式不同-->
+                <span class="state open"> <i class="point"></i> 进行中</span>
+                <span class="state no_open hidden"> <i class="point"></i> 进行中</span>
+                <span class="state no_open hidden"> <i class="point"></i> 已结束</span>
+            </p>
+        </li>
+        <li class="li3">
+            <a href="">咨询</a>
+        </li>
+    </ul>
+</header>
+<section>
+    <div class="notice">
+        <div class="notice_top">
+            <p class="p1">[托福阅读]提高定位速度-30s找到定位句</p>
+            <p class="p2">本次课程2018-04-30 20:30:00开始</p>
+        </div>
+        <!--<div class="notice_bottom">
+            <button class="btn">推送通知</button>
+        </div>-->
+    </div>
+    <div class="introduce">
+        <p>听课指南</p>
+        <p>1.听不到声音请往下翻，点击语音即可播放，并确认手机没有静音。</p>
+        <p>2.课程语音永久保留，无限复听。</p>
+        <p>3.遇到卡顿和加载不出，点返回，重新进入即可。</p>
+    </div>
+    <div class="floor3 chat_all">
+        <p class="chat_all_note chat_time">04-30 08:30</p>
+        <div class="one_chat ">
+            <div class="clearfix">
+                <div class="left user_img">
+                    <img src="/images/Group 13@2x.png" alt="" />
+                </div>
+                <div class="left user_txt">
+                    <p class="u_name">
+                        豆豆 <span class="u_type">助教</span>
+                    </p>
+                    <div class="u_speak">
+								<span class="is_text">
+												欢迎进入小站21天提分战团线上直播间。今天的直播课由范霖老师上课。
+											本次直播将于晚上20:30正式开始，课程为“讲课＋问答”环节，
+											老师将采用“语音＋图片”的形式进行线上直播分享，
+											同学们也可以在幻灯区域提前查看ppt课件内容，总是长一个半小时以内。
+											</span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat_all_note">
+            <p class="chat_aready_look">04-30 08:30</p>
+        </div>
+
+        <div class="one_chat">
+            <div class="clearfix">
+                <div class="left user_img">
+                    <img src="/images/Group 13@2x.png" alt="" />
+                </div>
+                <div class="left user_txt">
+                    <p class="u_name">
+                        豆豆 <span class="u_type">助教</span>
+                    </p>
+                    <div class="u_speak">
+								<span class="is_text">
+												<i class="ques_icon"></i>
+												<i class="person">静静</i>
+												：老师，有什么好书推荐吗？我的口语表达能力有点弱。
+												<i class="line"></i>
+												回复：推荐看小站名师精编的《15天轻松掌握托福口语》，在书店有卖。
+											</span>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="one_chat">
+            <div class="clearfix">
+                <div class="left user_img">
+                    <img src="/images/Group 13@2x.png" alt="" />
+                </div>
+                <div class="left user_txt">
+                    <p class="u_name">
+                        豆豆 <span class="u_type">助教</span>
+                    </p>
+                    <div class="u_speak">
+                        <img class="s_img" src="/images/123.png" alt="" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="one_chat ">
+            <div class="clearfix">
+                <div class="left user_img">
+                    <img src="/images/Group 13@2x.png" alt="" />
+                </div>
+                <div class="left user_txt">
+                    <p class="u_name">
+                        豆豆 <span class="u_type">助教</span>
+                    </p>
+                    <div class="u_speak">
+                        <div class="audio_box">
+                            <!--控制P标签的百分比长度控制音频长度-->
+                            <p class="a_control">
+                                <i class="js-a-open "></i>
+                                <i class="js-a-close hidden"></i>
+                                <!--这里通过控制类名来看音频状态 no_listen aready_listen-->
+                                <span class="audio_state no_listen">
+														<i class=""></i>
+													</span>
+                                <span class="audio_time">
+														<i>7</i>”
+													</span>
+                            </p>
+                            <audio class="" id="video1" preload="metadata" src="/6-4.mp3">
+
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--在右侧的消息-->
+        <div class="one_chat right_chat ">
+            <div class="clearfix">
+                <div class="left user_img">
+                    <img src="/images/Group 13@2x.png" alt="" />
+                </div>
+                <div class="left user_txt">
+
+                    <p class="u_name">
+                        <span class="u_type">nino</span>
+                    </p>
+                    <div class="u_speak">
+                        <div class="audio_box">
+                            <!--控制P标签的百分比长度控制音频长度-->
+                            <p class="a_control">
+                                <i class="js-a-open "></i>
+                                <i class="js-a-close hidden"></i>
+                                <!--这里通过控制类名来看音频状态 no_listen aready_listen-->
+                                <span class="audio_state no_listen">
+														<i class=""></i>
+													</span>
+                                <span class="audio_time">
+														<i>7</i>”
+													</span>
+                            </p>
+                            <audio class="" id="video1" preload="metadata" src="/6-4.mp3">
+
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="Reply">
+                    回复
+                </div>
+
+            </div>
+            <p class="cancel_mes">
+                撤回
+            </p>
+        </div>
+        <div class="one_chat clearfix">
+            <div class="left user_img">
+                <img src="/images/Group 13@2x.png" alt="" />
+            </div>
+            <!--这里有个锚点  注意-->
+            <div class="left user_txt" id="maodian">
+                <p class="u_name">
+                    豆豆 <span class="u_type">助教</span>
+                </p>
+                <div class="u_speak">
+                    <div class="audio_box">
+                        <!--控制P标签的百分比长度控制音频长度-->
+                        <p class="a_control">
+                            <i class="js-a-open"></i>
+                            <i class="js-a-close hidden"></i>
+                        </p>
+                        <audio class="" id="video1" preload="metadata" src="/6-4.mp3">
+
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--弹幕-->
+    <div class="barrage">
+        <span class="teacher_block">弹</span>
+        <img src="/images/tanmuguanlaoshi.png" alt="" / class="teacher_none dis_none">
+    </div>
+
+    <!--讨论-->
+    <div class="discuss">
+        <span>讨论</span>
+    </div>
+    <!--弹幕显示内容-->
+    <div class="barrage_content">
+				<span>
+					<p>The republics of the republics of a mobile phone shell</p>
+					<img src="/images/Group 13@2x.png" alt="" />
+				</span>
+    </div>
+    <!--显示多少条消息-->
+    <div class="news">
+        <span class="display">13条新消息</span> <img src="/images/︽@2x.png" alt="" />
+    </div>
+</section>
+<footer>
+    <ul>
+        <li class="click_voice">
+            <!--初始状态的图片-->
+            <img src="/images/yuyin.png" alt="" / class="voice_image_display">
+            <!--高亮状态的图片-->
+            <img src="/images/yuyingaoliang.png" alt="" / class="dis_none voice_image_none">
+            <span class="font_voice">语音</span>
+        </li>
+        <li class="click_text">
+            <!--初始状态的图片-->
+            <img src="/images/wenzi.png" alt="" / class="text_image_display">
+            <!--高亮状态的图片-->
+            <img src="/images/wenzigaoliang.png" alt="" / class="text_image_none dis_none">
+            <span class="font_color">文字</span>
+        </li>
+        <li class="click_media_library">
+            <!--初始状态的图片-->
+            <img src="/images/meitiku.png" alt="" / class="click_display3">
+            <!--高亮状态的图片-->
+            <img src="/images/meitikugaaoliang.png" / class="click_media_none dis_none">
+            <span class="font_media">媒体库</span>
+        </li>
+        <li class="btn-list4">
+            <img src="/images/kejian.png" alt="" / class="click_display4">
+            <span>课件</span>
+        </li>
+        <li class="operation">
+            <img src="/images/gengduo.png" alt="" / class="click_display5">
+            <span>操作</span>
+        </li>
+    </ul>
+</footer>
+<!--录音功能-->
+<div class="tape dis_none">
+    <!--录音初始化状态-->
+    <div class="sound1 back">
+        <!--初始状态展示的文字-->
+        <div class="sound_state">
+            <p class="font_text1">点击开始录音</p>
+        </div>
+
+        <img src="/images/kaishiluyin.png" alt="" class="start"/>
+    </div>
+    <!--录音中-->
+    <div class="sound2 dis_none back">
+        <div class="sound_state">
+            <!--录音过程中展示的文字-->
+            <p class="font_text3">60s</p>
+            <p class="font_text2">录音中点击完成录音</p>
+        </div>
+
+        <!--录音过程展示的图片-->
+        <img src="/images/luyinzhong.png" alt="" / class="under_way">
+    </div>
+    <!--录音结束-->
+    <div class="sound3 dis_none">
+        <div class="sound_state">
+            <p class="font_text4">
+                <span class="rerecord dis_play">重录</span>
+                <span class="line dis_play">
+								</span><span class="suspend dis_play">试听</span></p>
+
+            <p class="font_text5">
+                共录音 <span>1</span> s，点击可发送
+            </p>
+        </div>
+
+        <button class="send">发送</button>
+    </div>
+    <!--暂停 重录-->
+    <div class="sound4 dis_none back">
+        <div class="sound_state">
+            <p class="font_text4">
+                <span class="rerecord dis_play">重录</span>
+                <span class="line dis_play">
+								</span>
+                <!--<span class="suspend dis_play">试听</span>-->
+            </p>
+            <p class="volume">
+                <img src="/images/bodong.gif" class="img_left" />
+            </p>
+        </div>
+
+        <button class="send">发送</button>
+    </div>
+</div>
+
+<!--点击输入文字-->
+<div class="Input_text dis_none">
+    <input type="text" / placeholder="输入内容..."><button class="send_out">发送</button>
+</div>
+<!--媒体库-->
+<div class="media_library dis_none">
+    <ul class="media_list clearfix">
+        <li>
+            <div class="picture1"><img src="/images/tupian.png" alt="" /></div>
+            <span class="font1">图片</span>
+            <input type="file" / class="pic_file1">
+        </li>
+        <li>
+            <div class="audio_frequency"><img src="/images/yinpin.png" alt="" /></div>
+            <span class="font2">音频</span>
+            <input type="file" / class="pic_file2">
+        </li>
+        <li>
+            <div class="video1"><img src="/images/shipin.png" alt="" /></div>
+            <span class="font3">视频</span>
+            <input type="file" / class="pic_file3">
+        </li>
+    </ul>
+</div>
+<!--更多操作-->
+<div class="award_pop1 dis_none">
+    <div class="more_operations">
+        <div class="more_top clearfix">
+            <span>更多操作</span>
+            <img src="/images/shouqi.png" alt="" / class="img_btn">
+        </div>
+        <ol>
+            <li class='Top'>
+                <img src="/images/HUIDINGBU.png" alt="" />
+                <span>回顶部</span>
+            </li>
+            <li class="bottom">
+                <img src="/images/HUIDIBU.png" alt="" />
+                <span>回底部</span>
+            </li>
+        </ol>
+        <div class="Blank"></div>
+        <ul>
+            <li>
+                <img src="/images/taolunshangqiang.png" alt="" / class="image_left1">
+                <span>学生上墙讨论</span>
+                <div class="images_right">
+                    <img src="/images/guan1.png" alt="" / class="image_right1">
+                    <img src="/images/guan2.png" / class="image_right2 dis_none">
+                </div>
+            </li>
+            <li>
+                <img src="/images/taolunshangqiang.png" alt="" / class="image_left1">
+                <span>学生语音发言</span>
+                <div  class="images_right">
+                    <img src="/images/guan1.png" alt="" / class="image_right1">
+                    <img src="/images/guan2.png" / class="image_right2 dis_none">
+                </div>
+            </li>
+            <li>
+                <img src="/images/xueshengyuyin.png" alt="" / class="image_left1">
+                <span>学生提问权限</span>
+                <div  class="images_right">
+                    <img src="/images/guan1.png" alt="" / class="image_right1">
+                    <img src="/images/guan2.png" / class="image_right2 dis_none">
+                </div>
+            </li>
+            <li>
+                <img src="/images/jinyan.png" alt="" / class="image_left1">
+                <span>全场禁言</span>
+                <div  class="images_right">
+                    <img src="/images/guan1.png" alt="" / class="image_right1">
+                    <img src="/images/guan2.png" / class="image_right2 dis_none">
+                </div>
+            </li>
+            <!--<li>
+                <img src="/images/liwumoshi.png" alt="" / class="image_left1">
+                <span>显示礼物模式</span>
+                <p>
+                    <img src="/images/guan.png" alt="" / class="image_right1">
+                    <img src="/images/kai.png" / class="dis_none image_right1">
+                </p>
+            </li>-->
+        </ul>
+        <div class="Blank"></div>
+    </div>
+
+</div>
+<!--讨论区-->
+<div class="award_pop dis_none">
+    <div class="discussion_area">
+        <div class="discussion_area_top">
+            <span>讨论区(1162)</span>
+            <div class="label_right">
+                <p class="p3"><input type="checkbox" />只看提问 <i class="circles"></i></p>
+                <p class="p4"><img src="/images/shouqi.png" alt="" / class="shouqi"></p>
+            </div>
+        </div>
+        <div class="discussion_area_content">
+            <ul>
+                <li class="list_li1">
+                    <img src="/images/Group 13@2x.png" alt="" / class="Head_portrait">
+                    <div>
+                        <span class="user_name display">静静</span>
+                        <span class="time display">2018.03.26 13:39:30</span>
+                    </div>
+                    <div class="btn_why">
+                        <button class="delete">删除</button><button class="Upper_wall">上墙</button>
+                    </div>
+                </li>
+                <li class="list_li2">
+                    <button class="excuse">禁言</button>
+                    <img src="/images/wen.png" alt="" / class="wen">
+                    <span class="content display">老师，有什么好书推荐吗？我的口语表达能录有点弱。</span>
+                </li>
+            </ul>
+            <!--<div class="Blank"></div>-->
+            <ul>
+                <li class="list_li1">
+                    <img src="/images/Group 13@2x.png" alt="" / class="Head_portrait">
+                    <div>
+                        <span class="user_name display">静静</span>
+                        <span class="time display">2018.03.26 13:39:30</span>
+                    </div>
+                    <div class="btn_why">
+                        <button class="delete">删除</button><button class="Upper_wall">上墙</button>
+                    </div>
+                </li>
+                <li class="list_li2">
+                    <button class="excuse">禁言</button>
+                    <span class="content display">老师，有什么好书推荐吗？我的口语表达能录有点弱。</span>
+                </li>
+            </ul>
+            <!--<div class="Blank"></div>-->
+            <ul>
+                <li class="list_li1">
+                    <img src="/images/Group 13@2x.png" alt="" / class="Head_portrait">
+                    <div>
+                        <span class="user_name display">静静</span>
+                        <span class="time display">2018.03.26 13:39:30</span>
+                    </div>
+                    <div class="btn_why">
+                        <button class="delete">删除</button><button class="Upper_wall">上墙</button>
+                    </div>
+                </li>
+                <li class="list_li2">
+                    <button class="excuse">禁言</button>
+                    <span class="content display">老师，有什么好书推荐吗？我的口语表达能录有点弱。</span>
+                </li>
+            </ul>
+            <!--<div class="Blank"></div>-->
+            <ul>
+                <li class="list_li1">
+                    <img src="/images/Group 13@2x.png" alt="" / class="Head_portrait">
+                    <div>
+                        <span class="user_name display">静静</span>
+                        <span class="time display">2018.03.26 13:39:30</span>
+                    </div>
+                    <div class="btn_why">
+                        <button class="delete">删除</button><button class="Upper_wall">上墙</button>
+                    </div>
+                </li>
+                <li class="list_li2">
+                    <button class="excuse excuse1">禁言</button>
+                    <span class="content display">老师，有什么好书推荐吗？我的口语表达能录有点弱。</span>
+                </li>
+            </ul>
+            <!--<div class="Blank"></div>-->
+            <div class="baseline">
+                <p class="Transverse_line1"></p>
+                <p class="p_font">我也是有底线的</p>
+                <p class="Transverse_line2"></p>
+            </div>
+        </div>
+        <div class="discussion_area_bottom">
+            <input type="text" / placeholder="输入内容..."><button class="send_out1">发送</button>
+        </div>
+    </div>
+    <!--禁言-->
+    <span class="An_excuse dis_none">
+				<!--nino已被您禁言-->
+			</span>
+</div>
+<!--讨论区内容为空-->
+<div class="award_pop2 dis_none">
+    <div class="discussion_area">
+        <div class="discussion_area_top">
+            <span>讨论区(0)</span>
+            <div class="label_right">
+                <p class="p4"><img src="/images/shouqi.png" alt="" / class="shouqi"></p>
+            </div>
+        </div>
+        <div class="discussion_area_content">
+            <img src="/images/暂无讨论@2x.png" alt="" / class="kong">
+            <p class="p5">暂无讨论内容</p>
+        </div>
+    </div>
+</div>
+<!--点击重录的弹框-->
+<div class="elastic award_pop3 dis_none">
+    <div class="elastic_box">
+        <div class="elastic_top">
+            确定重新录音吗？
+        </div>
+        <div class="elastic_bottom">
+            <button class="btn_left1">取消</button><button class="btn_right1">确定</button>
+        </div>
+    </div>
+</div>
+<!--讨论区删除弹框-->
+<div class="elastic award_pop4 dis_none">
+    <div class="elastic_box">
+        <div class="elastic_top">
+            确定删除吗？
+        </div>
+        <div class="elastic_bottom">
+            <button class="btn_left1">取消</button><button class="btn_right1">确定</button>
+        </div>
+    </div>
+</div>
+<!--讨论区上墙弹框-->
+<div class="elastic award_pop5 dis_none">
+    <div class="elastic_box">
+        <div class="elastic_top1">
+            <textarea name="" rows="" cols="" class="text" placeholder="回复:nino"></textarea>
+        </div>
+        <div class="elastic_bottom">
+            <button class="btn_left1">取消</button><button class="btn_right1" style="color: #4C91FF;">发送</button>
+        </div>
+    </div>
+</div>
+</body>
+<!--	<script src="/js/plugins/jquery.min.js"></script>-->
+<script src="/js/plugins/zepto.js"></script>
+<!--<script src="/js/plugins/zepto.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="/js/page/mggScrollImg.js"></script>
+<script src="http://res.wx.qq.com/open//js/jweixin-1.2.0.js"></script>
+<script src="/js/page/Teacher.js"></script>
+<script type="text/javascript">
+    var weixin_data = <?php echo json_encode($sign_package); ?>;
+    /*
+     注意：$.mggScrollImg返回的scrollImg对象上有
+     next，prev，go三个方法，可以实现外部对滚动索引的控制。
+     如：scrollImg.next();//会切换到下一张图片
+     scrollImg.go(0);//会切换到第一张图片
+     */
+    var scrollImg = $.mggScrollImg('.js-switch ul',{
+        loop : false,//循环切换
+        auto : false,//自动切换
+        callback : function(index){//这里传过来的是索引值
+            $('.num .current').text(index+1);
+        }
+    });
+
+
+
+    var voice = {
+        'localId' : "12"
+    } ;
+
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: weixin_data.appId,// 必填，公众号的唯一标识
+        timestamp: weixin_data.timestamp,// 必填，生成签名的时间戳
+        nonceStr: weixin_data.nonceStr,// 必填，生成签名的随机串
+        signature: weixin_data.signature,// 必填，签名，见附录1
+        jsApiList: ["chooseImage", "startRecord", "stopRecord","stopVoice", "onVoiceRecordEnd", "playVoice", "uploadVoice"] // 必填，需要使用的JS接口列表
+    });
+    wx.ready(function() {
+        console.log("chenggong");
+        //注册微信播放录音结束事件【一定要放在wx.ready函数内】 这是录音一分钟必须结束
+        wx.onVoicePlayEnd({
+            success: function(res) {
+//					stopWave();
+            }
+        });
+
+    });
+
+
+
+
+    if(!localStorage.rainAllowRecord || localStorage.rainAllowRecord !== 'true') {
+        console.log(2)
+        wx.startRecord({
+            success: function() {
+                localStorage.rainAllowRecord = 'true';
+                wx.stopRecord();
+            },
+            cancel: function() {
+                alert('用户拒绝授权录音');
+            }
+        });
+    }
+
+
+
+    //假设全局变量已经在外部定义
+    //按下开始录音
+    $('.sound1 .start').on('click', function(event) {
+        begin_tape();
+    });
+    //松手结束录音
+    $('.sound2 .under_way').on('click', function(event) {
+        $(".sound2").hide();
+        $(".sound3").show();
+        event.preventDefault();
+        END = new Date().getTime();
+        /*清除录音时间的计时器*/
+        clearInterval(window.tape_time_inter);
+        if((END - START) < 300) {
+            END = 0;
+            START = 0;
+            //小于300ms，不录音
+            clearTimeout(recordTimer);
+
+        } else {
+            wx.stopRecord({
+                success: function(res) {
+                    voice.localId = res.localId;
+                    uploadVoice();
+                },
+                fail: function(res) {
+                    alert(JSON.stringify(res));
+                }
+            });
+        }
+    });
+
+    /*重录按钮*/
+    $(".tape .rerecord").click(function(){
+        $(".award_pop3").show();
+        /*重新录制前要把正在播放的暂停掉*/
+        wx.stopVoice({
+            localId: voice.localId // 需要停止的音频的本地ID，由stopRecord接口获得
+        });
+    })
+    /*取消弹框控制*/
+    $(".award_pop3 .btn_left1").click(function(){
+        $(".award_pop3").hide();
+    })
+    $(".award_pop3 .btn_right1").click(function(){
+        $(".sound_state .font_text3").html("60s");
+        $(".award_pop3").hide();
+        begin_tape();
+    })
+    /*点击试听*/
+    $(".tape .suspend").click(function(){
+        $(".sound3").hide();
+        $(".sound4").show();
+        wx.playVoice({
+            localId: voice.localId // 需要播放的音频的本地ID，由stopRecord接口获得
+        });
+    })
+
+    $(".click_display3").click(function () {
+        wx.chooseImage({
+            count: 9, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+//                alert(res.localIds);
+                var i = 0, length = res.localIds.length;
+//                alert(length);
+//                images.localId = res.localIds;
+//                images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                if (length == 0) {
+                    alert('请先选择图片');
+                    return false;
+                }
+                if(length > 9) {
+                    alert('目前仅支持9张图片上传,请重新选择');
+                    return false;
+                }
+
+
+
+                while (i < length-1){
+                    uploadImg(res.localIds[i]);
+                    i++;
+                }
+
+//                var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+//                 images.localId =images.localId.concat(res.localIds);
+//                uploadImg(localId)
+            }
+
+        });
+
+    })
+
+    function uploadImg(localId) {
+        wx.getLocalImgData({
+            localId: localId, // 图片的localID
+            success: function (res) {
+                var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+                localData = localData.replace('data:image/jgp;base64,', '');
+                $.ajax({
+                    url: 'http://res.iawim.com/upload/image',
+                    type: "post",
+                    async: "false",
+                    data: {img_data : localData},
+                    dataType: 'json',
+                    success: function (msg) {
+                        if (msg.code == 0) {
+                            alert('upload success');
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function uploadImgs(localId) {
+        wx.getLocalImgData({
+            localId: localId, // 图片的localID
+            success: function (res) {
+                alert(2);
+                var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+//                localData = localData.replace('data:image/jgp;base64,', '');
+                $.ajax({
+                    url: 'http://res.iawim.com/upload/image',
+                    type: "post",
+                    async: "false",
+                    data: {img_data : localData},
+                    dataType: 'json',
+                    success: function (msg) {
+                        if (msg.code == 0) {
+                            img_url = msg.data.img_url;
+                            show_submit();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    //录音事件方法
+    function begin_tape(){
+        /*对应显示隐藏*/
+        $(".sound1").hide();
+        $(".sound2").show();
+        $(".sound3").hide();
+        $(".sound4").hide();
+        event.preventDefault();
+        START = new Date().getTime();
+
+        recordTimer = setTimeout(function() {
+            wx.startRecord({
+                success: function() {
+                    var tape_time = 60;
+                    window.tape_time_inter = setInterval(function(){
+                        tape_time -- ;
+                        $(".sound_state .font_text3").html(tape_time+"s");
+                        $(".font_text5 span").html(60-tape_time);
+
+                        if(tape_time == 0){
+                            $(".sound2").hide();
+                            $(".sound3").show();
+                            clearInterval(window.tape_time_inter);
+                            wx.stopRecord({
+                                success: function(res) {
+                                    voice.localId = res.localId;
+                                    console.log(123);
+
+                                },
+                                fail: function(res) {
+                                    alert(JSON.stringify(res));
+                                }
+                            });
+                        }
+                    },1000)
+
+                    localStorage.rainAllowRecord = 'true';
+                },
+                cancel: function() {
+                    alert('用户拒绝授权录音');
+                }
+            });
+        }, 300);
+    }
+
+    //上传录音
+    function uploadVoice() {
+        //调用微信的上传录音接口把本地录音先上传到微信的服务器
+        //不过，微信只保留3天，而我们需要长期保存，我们需要把资源从微信服务器下载到自己的服务器
+        wx.uploadVoice({
+            localId: voice.localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: function(res) {
+                alert(res.serverId);
+                //把录音在微信服务器上的id（res.serverId）发送到自己的服务器供下载。
+                    $.ajax({
+                        url: 'http://res.iawim.com/upload/audio',
+                        type: 'post',
+                        async: "false",
+                        data: {mediaid: res.serverId},
+                        dataType: "json",
+                        success: function(data) {
+                            alert(1);
+//                            alert('文件已经保存到七牛的服务器'); //这回，我使用七牛存储
+                        },
+                        error: function(xhr, errorType, error) {
+                            console.log(error);
+                        }
+                    });
+            }
+        });
+    }
+
+
+</script>
+
+</html>

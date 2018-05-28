@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:http="http://www.w3.org/1999/xhtml">
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,initial-scale=1.0" />
+  <meta name="renderer" content="webkit">
+  <link rel="stylesheet" href="https://static2.zhan.com/beikao/css/style.min.css?v=201805111948" />
+  <script src="https://static2.zhan.com/beikao/js/lib.min.js?v={STATIC_FILE_VERSION}"></script>
+  <script src="https://static2.zhan.com/beikao/js/common.js?v={STATIC_FILE_VERSION}"></script>
+  <script src="https://static2.zhan.com/beikao/js/jquery.cookie.js?v={STATIC_FILE_VERSION}"></script>
+  <script src="https://static2.zhan.com/beikao/js/analytical_srollbar.min.js?v={STATIC_FILE_VERSION}"></script>
+  <style>
+    /*404页面自适应*/
+    .cssWrapper{
+      width: 100%;
+      margin: 0 auto;
+       min-width:375px;
+    }
+    .cssWrapper .main-container{
+      width: 50%;
+      margin:0 auto;
+
+    }
+    @media screen and (max-width:1920px) and (min-width:690px){
+      html{
+        font-size: 16px;
+      }
+      .nopages img{
+         width: 15rem;
+         height: 6rem;
+      } 
+    } 
+    @media screen and (max-width:960px) and (min-width:360px){
+      html{
+        font-size:12px;
+      }
+      .nopages img{
+         width: 15rem;
+         height: 6rem;
+      } 
+      .nopages .errorpage_text{
+        font-size: 18px;
+      }
+    } 
+  </style>
+  <!--[if IE]>
+    <script src="https://static2.zhan.com/beikao/js/html5shiv.min.js"></script>
+<![endif]-->
+</head>
+<body>
+  <div class="outer-wrapper cssWrapper">
+    <div class="bg_layer"></div>
+    <div class="main-container">
+      <div class="nopages">
+        <img src="https://static2.zhan.com/beikao/images/404p.png?v={STATIC_FILE_VERSION}">
+        <div  class="errorpage_text">出事啦！页面出逃了，系统正在尽力抓捕</div>
+        <div class="btn_href"  onclick="window.open('http://top.zhan.com','_self')">
+          <li><a id="siteurl" href="">返回首页</a></li>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <script>
+    $('#siteurl').attr('href', window.location.origin);
+  </script>
+</body>
+</html>

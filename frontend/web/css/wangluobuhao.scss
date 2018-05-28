@@ -1,0 +1,32 @@
+.box {
+    width: 100%;
+    height: 100%;
+    background: rgb(247, 247, 247);
+    position: relative;
+    padding-top: 2.8rem;
+    img {
+        width: 3.4rem;
+        height: 2.76rem;
+        margin: auto;
+        margin-bottom: 0.6rem;
+        //      position: absolute;
+        //      top: 2.8rem;
+    }
+    div {
+        font-size: 0.32rem;
+        color: #B0B0B0;
+        //      margin-left: 2.64rem;
+        text-align: center;
+        margin-bottom: 0.6rem;
+    }
+    button {
+        width: 2.4rem;
+        height: 0.88rem;
+        background: #4C91FF;
+        border-radius: 0.44rem;
+        font-size: 0.32rem;
+        color: #FFFFFF;
+        margin: auto;
+        display: block;
+    }
+}

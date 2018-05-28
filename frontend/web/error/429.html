@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <link rel="shortcut icon" href="/favicon.ico?v={STATIC_FILE_VERSION}" />
+  <link rel="stylesheet" href="https://static2.zhan.com/beikao/css/style.min.css?v={STATIC_FILE_VERSION}" />
+  <script src="https://static2.zhan.com/beikao/js/lib.min.js?v={STATIC_FILE_VERSION}"></script>
+  <script src="https://static2.zhan.com/beikao/js/common.js?v={STATIC_FILE_VERSION}"></script>
+  <script src="https://static2.zhan.com/beikao/js/analytical_srollbar.min.js?v={STATIC_FILE_VERSION}"></script>
+  <!--[if IE]>
+  <script src="https://static2.zhan.com/beikao/js/html5shiv.min.js?v={STATIC_FILE_VERSION}"></script>
+  <![endif]-->
+
+  <style>
+    .threescreen .cont .tea{ /* modify 2017-03-06 */
+      width:290px;
+      margin-left:10px
+    }
+    .threescreen .cont .teacher_bg{
+      width:100%;
+      text-align:center;
+    }
+    .threescreen .cont .tea .introduce{
+      width:100%;
+    }
+    .threescreen .cont .tea .introduce p{
+      width:100%;
+    }
+  </style>
+</head>
+<body>
+<input type="hidden" class="is_login" value="true">
+<div id="topbg">
+  <div class="posi">
+    <div class="logo left">
+      <a href="http://top.zhan.test/"><img src="https://static2.zhan.com/beikao/images/logo.png?v={STATIC_FILE_VERSION}" /></a>
+    </div>
+    <ul id="top_nav_menu" class="top_nav left hoverState"><!-- 加上hoverState的CLASS 则不会hover隐藏 -->
+      <li><a href="/"  data-letters="首页">首页</a></li>
+      <li>
+        <a href="/toefl/"  data-letters="托福" target="_blank">托福</a>
+        <div class="second-menu">
+          <div>
+            <a class="" href="/toefl/"  data-letters="首页">首页</a>
+            <a class="" href="/toefl/listen/alltpo.html"  data-letters="听力">听力</a>
+            <a class="" href="/toefl/reading/alltpo.html" data-letters="阅读">阅读</a>
+            <a class="" href="/toefl/speak/alltpo.html" data-letters="口语">口语</a>
+            <a class="" href="/toefl/writing/alltpo.html" data-letters="写作">写作</a>
+            <a class="" href="/toefl/simulate/alltpo.html" data-letters="模考">模考</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <a href="/ielts/" data-letters="雅思" data-mouseover="smenu02" target="_blank">雅思</a>
+        <div class="second-menu">
+          <div>
+            <a class="" href="/ielts/listen/cambridge.html"  data-letters="听力">听力</a>
+            <a class="" href="/ielts/read/cambridge.html"  data-letters="阅读">阅读</a>
+            <a class="" href="/ielts/speak/cambridge.html"  data-letters="口语">口语</a>
+            <a class="" href="/ielts/write/cambridge.html"  data-letters="写作">写作</a>
+          </div>
+      </li>
+      <li>
+        <a href="http://ke.zhan.com" data-letters="公开课" target="_blank">公开课</a>
+      </li>
+      <div class="clear"></div>
+    </ul>
+    <div class="clear"></div>
+  </div>
+</div>
+
+
+<div id="outmenusecond" class="second-menu-out" >
+  <div data-letters="托福" style="display:none" >
+    <a class="" href="/toefl/"  data-letters="首页">首页</a>
+    <a class="" href="/toefl/listen/alltpo.html"  data-letters="听力">听力</a>
+    <a class="" href="/toefl/reading/alltpo.html" data-letters="阅读">阅读</a>
+    <a class="" href="/toefl/speak/alltpo.html" data-letters="口语">口语</a>
+    <a class="" href="/toefl/writing/alltpo.html" data-letters="写作">写作</a>
+    <a class="" href="/toefl/simulate/alltpo.html" data-letters="模考">模考</a>
+  </div>
+  <div data-letters="雅思" style="display:none">
+    <a class="" href="/ielts/listen/cambridge.html"  data-letters="听力">听力</a>
+  </div>
+</div>
+<div class="bg_layer"></div>
+
+<script>
+    $(function() {
+        setMenuActive();
+    })
+    //二级菜单激活项加载
+    function setMenuActive() {
+        var $elem = $("#top_nav_menu");
+        var dw = $elem.data("active").split('_');
+
+        if ( dw instanceof Array ) {
+
+            $("#top_nav_menu>li").each(function() {
+                if ( $(this).find(">a").eq(0).data("letters") == dw[0] ) {
+                    $(this).find(">a").eq(0).addClass("active");
+                    $(this).find(".second-menu a").each(function() {
+                        if (  $(this).data("letters") == dw[1] ) {
+                            $(this).addClass("active");
+                            return false;
+                        }
+                    })
+                    return false;
+                }
+            })
+
+            if ( !$("#top_nav_menu").hasClass("hoverState") ) {
+                $("#outmenusecond>div").each(function() {
+                    if ( $(this).data("letters") == dw[0] ) {
+                        $(this).removeAttr("style");
+                        $(this).find("a").each(function() {
+                            if (  $(this).data("letters") == dw[1] ) {
+                                $(this).addClass("active");
+                                return false;
+                            }
+                        })
+                        return false;
+                    }
+                })
+            }
+
+        }
+
+    }
+    //固定二级菜单切换
+    function show_second_menu(num) {
+        if ( $("#top_nav_menu").hasClass("hoverState") ) {
+            return;
+        }
+        var menu = document.querySelector("#outmenusecond"),
+            $divs = $(menu).find(">div");
+
+        switch (num) {
+            case 1: $divs.eq(1).css("display","none");
+                $divs.eq(0).css("display","block");
+                break;
+            case 2: $divs.eq(0).css("display","none");
+                $divs.eq(1).css("display","block");
+            default:break;
+        }
+    }
+</script>
+
+<div class="bg_layer"></div>
+<div class="main-container">
+  <div class="nopages">
+    <img src="https://static2.zhan.com/beikao/images/toomany.png?v={STATIC_FILE_VERSION}">
+  </div>
+</div>
+</body>
+</html>

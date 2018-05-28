@@ -1,0 +1,133 @@
+@charset "utf-8";
+/*@charset "gbk";*/
+
+/*------------------------------------------
+            CSS Document
+-------------------------------------------*/
+
+/*------------------------------------------
+            ALL BASIC
+-------------------------------------------*/
+
+html{font-size: 100px;}
+@media screen and (max-width: 750px) {html{font-size:100px;}}
+@media screen and (max-width: 740px) {html{font-size:98.67px;}}
+@media screen and (max-width: 707px) {html{font-size:94.27px;}}
+@media screen and (max-width: 664px) {html{font-size:88.53px;}}
+@media screen and (max-width: 640px) {html{font-size:85.33px;}}
+@media screen and (max-width: 621px) {html{font-size:82.8px;}}
+@media screen and (max-width: 578px) {html{font-size:77.07px;}}
+@media screen and (max-width: 550px) {html{font-size:73.33px;}}
+@media screen and (max-width: 535px) {html{font-size:71.33px;}}
+@media screen and (max-width: 492px) {html{font-size:65.6px;}}
+@media screen and (max-width: 470px) {html{font-size:62.67px;}}
+@media screen and (max-width: 449px) {html{font-size:59.87px;}}
+@media screen and (max-width: 414px) {html{font-size:55.2px;}}
+@media screen and (max-width: 412px) {html{font-size:54.93px;}}
+@media screen and (max-width: 406px) {html{font-size:54.13px;}}
+@media screen and (max-width: 375px) {html{font-size:50px;}}
+@media screen and (max-width: 363px) {html{font-size:48.4px;}}
+@media screen and (max-width: 360px) {html{font-size:48px;}}
+@media screen and (max-width: 350px) {html{font-size:46.67px;}}
+@media screen and (max-width: 340px) {html{font-size:45.33px;}}
+@media screen and (max-width: 330px) {html{font-size:44px;}}
+@media screen and (max-width: 320px) {html{font-size:42.67px;}}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+  margin:0;
+  padding:0;
+}
+table {
+  border-collapse:collapse;
+  border-spacing:0;
+}
+fieldset, img {
+  border:0;
+}
+address, caption, cite, code, dfn, em, strong, th, var {
+  font-style:normal;
+  font-weight:normal;
+}
+ol, ul, li {
+  list-style:none;
+}
+caption, th {
+  text-align:left;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-size:100%;
+  font-weight:normal;
+}
+abbr, acronym {
+  border:0;
+}
+img{
+  display: block;
+  width: 100%;
+}
+textarea,input{
+	outline: none;
+	border: none;
+	-webkit-appearance:none;
+    apperance:none;
+	background: transparent;
+}
+button{
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+a:link {
+  text-decoration: none;
+  color: #FFF;
+}
+a:visited {
+  text-decoration: none;
+  color: #FFF;
+}
+a:hover {
+  text-decoration: none;
+  color: #FFF;
+}
+a:active {
+  text-decoration: none;
+  color: #FFF;
+}
+/* 清除浮动 */
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+  font-size:0;
+}
+.clearfix {
+  *zoom: 1;
+}
+
+html, body {
+  height: 100%;
+}
+
+body,*{
+  font-family:arial,Helvetica,sans-serif;
+
+}
+i{
+  font-style:normal;
+}
+.hidden{
+  display:none;
+}
+.left{
+  float: left;
+}
+.right{
+  float: right;
+}
+*{
+  box-sizing: border-box;
+}
