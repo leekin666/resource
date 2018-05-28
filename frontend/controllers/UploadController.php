@@ -44,6 +44,66 @@ class UploadController extends BaseController
 
         $extAllow = $this->params('ext',null);
         $sizeAllow = $this->params('size',null);
+        $imgDataArr = $this->params('img_data');
+//        Yii::$app->redis->set('imgdata'.time(),$imgData);
+//        $is_ajax = Yii::$app->request->isAjax;
+//        if ($extAllow || $sizeAllow) {
+//            $allow = ['ext'=>$extAllow,'size'=>$sizeAllow];
+//        }
+//
+//        if (!$imgData || !$is_ajax) {
+//            return JsonResult::error($this->errorMsg[-1],$this->errorCode[-1]);
+//        }
+        $data = [];
+        $length = count($imgDataArr);
+        Yii::$app->redis->set('length',$length);
+        $resource = new WeliveResource();
+        for ($key = 0; $key < $length; $key++){
+            $imgData = base64_decode($imgDataArr[$key]);
+
+            $file_name = mt_rand(0, 1000).time().'.jpg';
+            $data[$key] = $this->saveObjToOss($file_name, $imgData);
+
+            Yii::$app->redis->set('img'.$key,json_encode($data[$key]['url']));
+        }
+//        Yii::$app->redis->set('data',json_encode($data));
+        return JsonResult::success($data);
+    }
+
+    public function saveObjToOss($object, $imgData)
+    {
+        $resource = new WeliveResource();
+        try {
+            $ossRes = Yii::$app->Aliyunoss->putObject($object, $imgData);
+            if(isset($ossRes) && $ossRes['code'] == 0) {
+                $resource->course_id = rand(1,100);
+                $resource->blind_id = rand(1,100);
+                $resource->sort_id = rand(1,100);
+                $resource->res_type = 1;
+                $resource->file_mimetype = 'image/jpg';
+                $resource->file_name = $object;
+                $resource->file_type = 1;
+                $resource->file_phy_name = $object;
+                $resource->file_size = $ossRes['size'];
+                $resource->url = $ossRes['url'];
+                $resource->create_datetime = time();
+                $resource->save();
+                if ($resource->getErrors()){
+                    return ['code' => 40000, 'message' => 'fail'];
+                }else{
+                    return $ossRes;
+                }
+            }
+        } catch (OssException $e) {
+            return ['code' => 40000, 'message' => 'fail'];
+        }
+    }
+
+    public function actionImage11()
+    {
+
+        $extAllow = $this->params('ext',null);
+        $sizeAllow = $this->params('size',null);
         $imgData = $this->params('img_data');
 //        Yii::$app->redis->set('imgdata'.time(),$imgData);
 //        $is_ajax = Yii::$app->request->isAjax;
@@ -54,26 +114,38 @@ class UploadController extends BaseController
 //        if (!$imgData || !$is_ajax) {
 //            return JsonResult::error($this->errorMsg[-1],$this->errorCode[-1]);
 //        }
-
         $imgData = base64_decode($imgData);
-
         $file_name = mt_rand(0, 1000).time().'.jpg';
 
         $object = $file_name;
 
         try {
             $ossRes = Yii::$app->Aliyunoss->putObject($object, $imgData);
-
+            $resource = new WeliveResource();
+            if(isset($ossRes) && $ossRes['code'] == 0) {
+                $resource->course_id = rand(1,10);
+                $resource->blind_id = rand(1,10);
+                $resource->sort_id = rand(1,100);
+                $resource->res_type = 2;
+                $resource->file_mimetype = 'image/jpg';
+                $resource->file_name = $object;
+                $resource->file_type = 1;
+                $resource->file_phy_name = $object;
+                $resource->file_size = $ossRes['size'];
+                $resource->url = $ossRes['url'];
+                $resource->create_datetime = time();
+                $resource->save();
+                if ($resource->getErrors()){
+                    return JsonResult::error($this->errorMsg[-1],$this->errorCode[-1]);
+                }
+            }
         } catch (OssException $e) {
             return $this->responseJson(ResultApi::fail('保存图片失败'));
         }
-
-        Yii::$app->redis->set('imgurl'.rand(1000,9999),$ossRes['url']);
         return JsonResult::success($ossRes);
     }
 
     public function actionTest(){
-        echo phpinfo();die;
         $data = [
             'ext' => 1,
             'url' => 'sss'
@@ -109,31 +181,32 @@ class UploadController extends BaseController
         $redis->exec($resource->save());
         echo $resource->id;
     }
-    
+
+    /**
+     * 微信录音上传
+     */
     public function actionAudio()
     {
         $mediaId = $this->params('mediaid',0);
+        Yii::$app->redis->set('mediaid'.rand(1,100),$mediaId);
         if (!$mediaId){
             return JsonResult::error('Upload Fail');
         }
         $url = Yii::$app->wechat->getMediaDownloadUrl($mediaId);
         $savePath = dirname(Yii::$app->BasePath).'/frontend/web/temp';
         $downloadFile = $this->downloadAudioMedia($url, $savePath);
-
         if (!$downloadFile){
             return JsonResult::error('Upload Fail');
         }
         $mp3FileName = $this->msectime() . $this->salt(6) . '.mp3';
-//        Yii::$app->redis->set('arm',$downloadFile);
-//        Yii::$app->redis->set('mp3',$mp3FileName);
-//        $ossRes = Yii::$app->Aliyunoss->upload($mp3FileName,$downloadFile);
+        Yii::$app->redis->set('arm',$downloadFile);
+        Yii::$app->redis->set('mp3',$mp3FileName);
+
         $mp3File = $this->amrTransCodingMp3($downloadFile,$mp3FileName);
         $ossRes = Yii::$app->Aliyunoss->upload($mp3FileName,$mp3File);
-
 //        Yii::$app->redis->set('ossres',json_encode($ossRes));
-        $this->deleteDownloadFile($downloadFile);
+//        $this->deleteDownloadFile($downloadFile);
         $this->deleteDownloadFile($mp3File);
-        $data = [];
         $resource = new WeliveResource();
         if(isset($ossRes) && $ossRes['code'] == 0) {
             $resource->course_id = rand(1,10);
@@ -143,7 +216,7 @@ class UploadController extends BaseController
             $resource->file_mimetype = 'audio/mp3';
             $resource->file_name = $mp3File;
             $resource->file_type = 2;
-            $resource->file_phy_name = $mp3FileName;
+            $resource->file_phy_name = $mp3File;
             $resource->file_size = $ossRes['size'];
             $resource->url = $ossRes['url'];
             $resource->create_datetime = time();
@@ -152,7 +225,6 @@ class UploadController extends BaseController
                 return JsonResult::error($this->errorMsg[-1],$this->errorCode[-1]);
             }
         }
-        Yii::$app->redis->set('audio',$ossRes['url']);
         return JsonResult::success($ossRes);
 
     }
@@ -224,7 +296,6 @@ class UploadController extends BaseController
         $savePath = dirname(Yii::$app->BasePath).'/frontend/web/temp/';
         $mp3Name = $savePath.$mp3;
         $str = "ffmpeg -i ".$amr." ".$mp3Name;
-        Yii::$app->redis->set('exec',$str);
         exec("ffmpeg -i ".$amr." ".$mp3Name .'  &');
         return $mp3Name;
     }

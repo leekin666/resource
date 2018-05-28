@@ -19,11 +19,11 @@ class Aliyunoss extends Component
     public function __construct()
     {
         parent::__construct();
-        $accessKeyId = Yii::$app->params['oss']['accessKeyId'];                     //获取阿里云oss的accessKeyId
-        $accessKeySecret = Yii::$app->params['oss']['accessKeySecret'];             //获取阿里云oss的accessKeySecret
-        $endpoint = Yii::$app->params['oss']['endPoint'];                           //获取阿里云oss的endPoint
-        self::$oss = new OssClient($accessKeyId, $accessKeySecret, $endpoint);      //实例化OssClient对象
-        $this->uploadDir = Yii::$app->params['oss']['uploadDir'];   //获取阿里云oss存储路径
+        $accessKeyId = Yii::$app->params['oss']['accessKeyId'];                             //获取阿里云oss的accessKeyId
+        $accessKeySecret = Yii::$app->params['oss']['accessKeySecret'];                     //获取阿里云oss的accessKeySecret
+        $endpoint = Yii::$app->params['oss']['endPoint'];                                   //获取阿里云oss的endPoint
+        self::$oss = new OssClient($accessKeyId, $accessKeySecret, $endpoint);              //实例化OssClient对象
+        $this->uploadDir = Yii::$app->params['oss']['uploadDir'].date('Ymd').'/';   //获取阿里云oss存储路径
     }
 
     /**
@@ -43,7 +43,7 @@ class Aliyunoss extends Component
             self::$oss->createBucket($bucket);
         }
         if ($this->uploadDir){
-            $object = $this->uploadDir.date("Ymd").'/'.$object;
+            $object = $this->uploadDir.$object;
         }
         //调用uploadFile方法把服务器文件上传到阿里云oss
         try {
@@ -83,6 +83,7 @@ class Aliyunoss extends Component
             $res = self::$oss->putObject($bucket, $object, $filepath);
             
             $return['code'] = 0;
+            $return['size'] = $res['info']['size_upload'];
             $return['url'] = $res['info']['url'];
         }catch(Exception $e) {
             $return['code'] = 1;

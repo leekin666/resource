@@ -590,6 +590,7 @@
         </div>
     </div>
 </div>
+<input type="hidden" name="imgData[]" id = imgData>
 </body>
 <!--	<script src="/js/plugins/jquery.min.js"></script>-->
 <script src="/js/plugins/zepto.js"></script>
@@ -713,18 +714,17 @@
             localId: voice.localId // 需要播放的音频的本地ID，由stopRecord接口获得
         });
     })
-
+    var dataArr = new Array();
     $(".click_display3").click(function () {
         wx.chooseImage({
             count: 9, // 默认9
             sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
             success: function (res) {
-//                alert(res.localIds);
                 var i = 0, length = res.localIds.length;
-//                alert(length);
-//                images.localId = res.localIds;
-//                images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                alert(res.localIds);
+                getLocalData(res.localIds);return false;
+               // alert(length);return false;
                 if (length == 0) {
                     alert('请先选择图片');
                     return false;
@@ -733,24 +733,58 @@
                     alert('目前仅支持9张图片上传,请重新选择');
                     return false;
                 }
-
-
-
-                while (i < length-1){
-                    uploadImg(res.localIds[i]);
+                var imgDataArr = new Array();
+                while (i < length -1){
+                    getLocalData(res.localIds[i],i);
+                    // alert(imgDataArr[i]);return false;
+                    // uploadImgss(res.localIds[i]);
                     i++;
+                    alert(dataArr[i]);
                 }
-
-//                var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-//                 images.localId =images.localId.concat(res.localIds);
-//                uploadImg(localId)
+                alert(imgDataArr);return false;
+                // uploadImg(imgDataArr);
             }
 
         });
 
-    })
+    });
+    function getLocalData(localIds){
+        var arr=new Array();
+        var i = 0, length = localIds.length;
+        // alert(localIds[0]);
+        while (i < length -1){
+            wx.getLocalImgData({
+                localId: localIds[i], // 图片的localID
+                success: function (res) {
+                    arr[i]  = res.localData.replace('data:image/jgp;base64,', '');
+                    alert(arr[i] );
+                    i++;
+                }
+            });
+        }
+        alert(arr[0]);
+        return arr;
+    }
 
-    function uploadImg(localId) {
+    function getArr(data,i){
+        dataArr[i] = data;
+    }
+    function uploadImg(imgDataArr) {
+        $.ajax({
+            url: 'http://res.iawim.com/upload/image',
+            type: "post",
+            async: "false",
+            data: {img_data : imgDataArr},
+            dataType: 'json',
+            success: function (msg) {
+                if (msg.code == 0) {
+                    alert('upload success');
+                }
+            }
+        });
+    }
+
+    function uploadImgss(localId) {
         wx.getLocalImgData({
             localId: localId, // 图片的localID
             success: function (res) {

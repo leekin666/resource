@@ -409,7 +409,7 @@ class Wechat extends Component
      * 数据缓存时长
      * @var int
      */
-    public $cacheTime = 3600;
+    public $cacheTime = 7200;
     /**
      * @var array 最后请求的错误信息
      */
@@ -610,13 +610,13 @@ class Wechat extends Component
      */
     public function getAccessToken($force = false)
     {
-        $token = $this->getCache('xiaozhan_beikao_access_token', false);
+        $token = $this->getCache('beikao-jsapi-access-token', false);
         if ($force || !$token) {
             if (!($token = $this->requestAccessToken())) {
                 throw new HttpException(500, 'Fail to get access_token from wechat server.');
             }
             $this->trigger(self::EVENT_AFTER_ACCESS_TOKEN_UPDATE, new Event(['data' => $token]));
-            $this->setCache('xiaozhan_beikao_access_token', $token['access_token'], 7000);
+            $this->setCache('beikao-jsapi-access-token', $token['access_token'], 7000);
         }
 
         return $token;
