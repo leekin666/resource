@@ -44,7 +44,7 @@ class UploadController extends BaseController
 
         $extAllow = $this->params('ext',null);
         $sizeAllow = $this->params('size',null);
-        $imgDataArr = $this->params('img_data');
+        $imgData = $this->params('img_data');
 //        Yii::$app->redis->set('imgdata'.time(),$imgData);
 //        $is_ajax = Yii::$app->request->isAjax;
 //        if ($extAllow || $sizeAllow) {
@@ -55,31 +55,17 @@ class UploadController extends BaseController
 //            return JsonResult::error($this->errorMsg[-1],$this->errorCode[-1]);
 //        }
         $data = [];
-        $length = count($imgDataArr);
-        Yii::$app->redis->set('length',$length);
-        $resource = new WeliveResource();
-        for ($key = 0; $key < $length; $key++){
-            $imgData = base64_decode($imgDataArr[$key]);
-
-            $file_name = mt_rand(0, 1000).time().'.jpg';
-            $data[$key] = $this->saveObjToOss($file_name, $imgData);
-
-            Yii::$app->redis->set('img'.$key,json_encode($data[$key]['url']));
-        }
-//        Yii::$app->redis->set('data',json_encode($data));
-        return JsonResult::success($data);
-    }
-
-    public function saveObjToOss($object, $imgData)
-    {
+        $imgData = base64_decode($imgData);
+        $file_name = mt_rand(0, 1000).time().'.jpg';
         $resource = new WeliveResource();
         try {
+            $object = $file_name;
             $ossRes = Yii::$app->Aliyunoss->putObject($object, $imgData);
             if(isset($ossRes) && $ossRes['code'] == 0) {
-                $resource->course_id = rand(1,100);
-                $resource->blind_id = rand(1,100);
+                $resource->course_id = rand(1,10);
+                $resource->blind_id = rand(1,10);
                 $resource->sort_id = rand(1,100);
-                $resource->res_type = 1;
+                $resource->res_type = 2;
                 $resource->file_mimetype = 'image/jpg';
                 $resource->file_name = $object;
                 $resource->file_type = 1;
@@ -89,17 +75,16 @@ class UploadController extends BaseController
                 $resource->create_datetime = time();
                 $resource->save();
                 if ($resource->getErrors()){
-                    return ['code' => 40000, 'message' => 'fail'];
-                }else{
-                    return $ossRes;
+                    return JsonResult::error($this->errorMsg[-1],$this->errorCode[-1]);
                 }
             }
         } catch (OssException $e) {
-            return ['code' => 40000, 'message' => 'fail'];
+            return JsonResult::error($this->errorMsg[-1],$this->errorCode[-1]);
         }
+        return JsonResult::success($data);
     }
 
-    public function actionImage11()
+    public function actionImageOld()
     {
 
         $extAllow = $this->params('ext',null);

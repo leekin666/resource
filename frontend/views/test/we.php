@@ -714,7 +714,7 @@
             localId: voice.localId // 需要播放的音频的本地ID，由stopRecord接口获得
         });
     })
-    var dataArr = new Array();
+
     $(".click_display3").click(function () {
         wx.chooseImage({
             count: 9, // 默认9
@@ -722,9 +722,6 @@
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
             success: function (res) {
                 var i = 0, length = res.localIds.length;
-                alert(res.localIds);
-                getLocalData(res.localIds);return false;
-               // alert(length);return false;
                 if (length == 0) {
                     alert('请先选择图片');
                     return false;
@@ -733,21 +730,15 @@
                     alert('目前仅支持9张图片上传,请重新选择');
                     return false;
                 }
-                var imgDataArr = new Array();
-                while (i < length -1){
-                    getLocalData(res.localIds[i],i);
-                    // alert(imgDataArr[i]);return false;
-                    // uploadImgss(res.localIds[i]);
+                while (i < length){
+                    uploadImg(res.localIds[i]);
                     i++;
-                    alert(dataArr[i]);
                 }
-                alert(imgDataArr);return false;
-                // uploadImg(imgDataArr);
             }
-
         });
 
     });
+
     function getLocalData(localIds){
         var arr=new Array();
         var i = 0, length = localIds.length;
@@ -769,7 +760,8 @@
     function getArr(data,i){
         dataArr[i] = data;
     }
-    function uploadImg(imgDataArr) {
+
+    function uploadImgs(imgDataArr) {
         $.ajax({
             url: 'http://res.iawim.com/upload/image',
             type: "post",
@@ -784,7 +776,7 @@
         });
     }
 
-    function uploadImgss(localId) {
+    function uploadImg(localId) {
         wx.getLocalImgData({
             localId: localId, // 图片的localID
             success: function (res) {
@@ -798,31 +790,8 @@
                     dataType: 'json',
                     success: function (msg) {
                         if (msg.code == 0) {
-                            alert('upload success');
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-    function uploadImgs(localId) {
-        wx.getLocalImgData({
-            localId: localId, // 图片的localID
-            success: function (res) {
-                alert(2);
-                var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
-//                localData = localData.replace('data:image/jgp;base64,', '');
-                $.ajax({
-                    url: 'http://res.iawim.com/upload/image',
-                    type: "post",
-                    async: "false",
-                    data: {img_data : localData},
-                    dataType: 'json',
-                    success: function (msg) {
-                        if (msg.code == 0) {
                             img_url = msg.data.img_url;
-                            show_submit();
+                            alert('upload success');
                         }
                     }
                 });
@@ -883,7 +852,6 @@
             localId: voice.localId, // 需要上传的音频的本地ID，由stopRecord接口获得
             isShowProgressTips: 1, // 默认为1，显示进度提示
             success: function(res) {
-                alert(res.serverId);
                 //把录音在微信服务器上的id（res.serverId）发送到自己的服务器供下载。
                     $.ajax({
                         url: 'http://res.iawim.com/upload/audio',
@@ -891,9 +859,10 @@
                         async: "false",
                         data: {mediaid: res.serverId},
                         dataType: "json",
-                        success: function(data) {
-                            alert(1);
-//                            alert('文件已经保存到七牛的服务器'); //这回，我使用七牛存储
+                        success: function(msg) {
+                            if (msg.code==0){
+                                alert('success');
+                            }
                         },
                         error: function(xhr, errorType, error) {
                             console.log(error);
