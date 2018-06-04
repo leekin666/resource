@@ -30,7 +30,7 @@ class JsonResult
     }
 
 
-    public static function error($message = '', $code = null, $data = [])
+    public static function error($message = '', $code = 40000, $data = [])
     {
         $result = [
             'code' => $code??self::ERROR_CODE,

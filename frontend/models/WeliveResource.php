@@ -25,7 +25,7 @@ class WeliveResource extends ActiveRecord
     {
         return [
             'id', 
-            'course_id', 
+            'room_id',
             'blind_id', 
             'sort_id',
             'res_type', 
@@ -43,8 +43,8 @@ class WeliveResource extends ActiveRecord
     {
         parent::rules();
         return [
-            [['course_id', 'res_type', 'file_type', 'sort_id', 'url', 'file_name'], 'required'],
-            [['course_id', 'blind_id', 'sort_id'], 'integer'],
+            [['room_id', 'res_type', 'file_type', 'sort_id', 'url', 'file_name'], 'required'],
+            [['room_id', 'blind_id', 'sort_id'], 'integer'],
             [['create_datetime'], 'safe'],
         ];
     }
@@ -52,7 +52,7 @@ class WeliveResource extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'course_id' => 'Course ID',
+            'room_id' => 'Room ID',
             'res_type' => 'Res Type',
             'file_type' => 'File Type',
             'url' => 'Url',

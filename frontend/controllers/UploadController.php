@@ -41,7 +41,7 @@ class UploadController extends BaseController
      */
     public function actionImage()
     {
-
+        header('Access-Control-Allow-Origin:*');
         $extAllow = $this->params('ext',null);
         $sizeAllow = $this->params('size',null);
         $imgData = $this->params('img_data');
@@ -62,7 +62,7 @@ class UploadController extends BaseController
             $object = $file_name;
             $ossRes = Yii::$app->Aliyunoss->putObject($object, $imgData);
             if(isset($ossRes) && $ossRes['code'] == 0) {
-                $resource->course_id = rand(1,10);
+                $resource->room_id = rand(1,10);
                 $resource->blind_id = rand(1,10);
                 $resource->sort_id = rand(1,100);
                 $resource->res_type = 2;
@@ -81,6 +81,7 @@ class UploadController extends BaseController
         } catch (OssException $e) {
             return JsonResult::error($this->errorMsg[-1],$this->errorCode[-1]);
         }
+        $data = ['url' => $ossRes['url'], 'size' => $ossRes['size']];
         return JsonResult::success($data);
     }
 
@@ -150,7 +151,7 @@ class UploadController extends BaseController
         $resource = new WeliveResource(); 
         $redis = Yii::$app->redis;
         $redis->multi();
-        $now = date('Y-m-d H:i:s');
+        $now = time();
         $resource->course_id = 1; 
         $resource->blind_id = 1; 
         $resource->sort_id = 1; 
@@ -172,8 +173,74 @@ class UploadController extends BaseController
      */
     public function actionAudio()
     {
+        header('Access-Control-Allow-Origin:*');
+        $url = $this->params('media_url',0);
+        $roomId = $this->params('room_id',0);
+        $blindId = $this->params('blind_id',0);
+        $resType = $this->params('res_type',1);
+//        Yii::$app->redis->set('mediaurl',$url);
+        if (!$url){
+            return JsonResult::error('Upload Fail');
+        }
+//        $url = Yii::$app->wechat->getMediaDownloadUrl($mediaId);
+        $savePath = dirname(Yii::$app->BasePath).'/frontend/web/temp';
+        $downloadFile = $this->downloadAudioMedia($url, $savePath);
+        if (!$downloadFile){
+            return JsonResult::error('Upload Fail');
+        }
+        $mp3FileName = $this->msectime() . $this->salt(6) . '.mp3';
+//        Yii::$app->redis->set('arm',$downloadFile);
+//        Yii::$app->redis->set('mp3',$mp3FileName);
+
+        $mp3File = $this->amrTransCodingMp3($downloadFile,$mp3FileName);
+        Yii::$app->redis->set('mp3',$mp3File);
+        $ossRes = Yii::$app->Aliyunoss->upload($mp3FileName,$mp3File);
+
+        $this->deleteDownloadFile($downloadFile);
+//        Yii::$app->redis->set('delete1',1);
+        $this->deleteDownloadFile($mp3File);
+//        Yii::$app->redis->set('delete1',2);
+        $resource = new WeliveResource();
+        if(isset($ossRes) && $ossRes['code'] == 0) {
+            $resource->room_id = $roomId;
+            $resource->blind_id = $blindId;
+            $resource->sort_id = 0;
+            $resource->res_type = $resType;
+            $resource->file_mimetype = 'audio/mpeg';
+            $resource->file_name = $mp3FileName;
+            $resource->file_type = 2;
+            $resource->file_phy_name = $mp3FileName;
+            $resource->file_size = $ossRes['size'];
+            $resource->url = $ossRes['url'];
+            $resource->create_datetime = time();
+            $resource->save();
+            Yii::$app->redis->set('saveoss',3);
+            if ($resource->getErrors()){
+                Yii::$app->redis->set('saveoss',4);
+                return JsonResult::error($this->errorMsg[-1],$this->errorCode[-1]);
+            }
+        }
+        $data = ['url' => $ossRes['url'], 'size' => $ossRes['size']];
+//        Yii::$app->redis->set('ossres',json_encode($data));
+        return JsonResult::success($data);
+
+    }
+
+    public function actionGetMediaUrl()
+    {
         $mediaId = $this->params('mediaid',0);
-        Yii::$app->redis->set('mediaid'.rand(1,100),$mediaId);
+        if (!$mediaId){
+            return JsonResult::error('Upload Fail');
+        }
+        $url = Yii::$app->wechat->getMediaDownloadUrl($mediaId);
+        $data = ['url' => $url];
+        return JsonResult::success($data);
+    }
+
+    public function actionAudio1()
+    {
+        $mediaId = $this->params('mediaid',0);
+//        Yii::$app->redis->set('mediaid',$mediaId);
         if (!$mediaId){
             return JsonResult::error('Upload Fail');
         }
@@ -190,7 +257,7 @@ class UploadController extends BaseController
         $mp3File = $this->amrTransCodingMp3($downloadFile,$mp3FileName);
         $ossRes = Yii::$app->Aliyunoss->upload($mp3FileName,$mp3File);
 //        Yii::$app->redis->set('ossres',json_encode($ossRes));
-//        $this->deleteDownloadFile($downloadFile);
+        $this->deleteDownloadFile($downloadFile);
         $this->deleteDownloadFile($mp3File);
         $resource = new WeliveResource();
         if(isset($ossRes) && $ossRes['code'] == 0) {
@@ -210,7 +277,8 @@ class UploadController extends BaseController
                 return JsonResult::error($this->errorMsg[-1],$this->errorCode[-1]);
             }
         }
-        return JsonResult::success($ossRes);
+        $data = ['url' => $ossRes['url'], 'size' => $ossRes['size']];
+        return JsonResult::success($data);
 
     }
 
@@ -221,19 +289,14 @@ class UploadController extends BaseController
      */
     public function downloadAudioMedia($url ,$savePath='')
     {
-        // 获取文件流
         $file_flow = file_get_contents($url);
-
         if (!$savePath){
             $savePath = dirname(Yii::$app->BasePath).'/frontend/web/temp';
         }
         if( !file_exists($savePath) ) {
             $this->createDir($savePath);
         }
-
-        // 生成文件名
         $filename = $this->msectime() . $this->salt(6) . '.amr';
-        // 写入文件流到本地
         $flag = file_put_contents($savePath . '/' . $filename, $file_flow);
         unset($file_flow);
         if($flag !== FALSE) {
@@ -241,7 +304,6 @@ class UploadController extends BaseController
         }else {
             return FALSE;
         }
-
     }
 
     /**
@@ -271,51 +333,29 @@ class UploadController extends BaseController
 
     /**
      * 将amr格式转换成mp3格式
-     *
-     * @param $amr
-     * @param $prefix_filename
+     * @param $amr arm音频文件名
+     * @param $mp3 mp3音频文件名
      * @return mixed
      */
     public function amrTransCodingMp3($amr, $mp3)
     {
         $savePath = dirname(Yii::$app->BasePath).'/frontend/web/temp/';
         $mp3Name = $savePath.$mp3;
-        $str = "ffmpeg -i ".$amr." ".$mp3Name;
-        exec("ffmpeg -i ".$amr." ".$mp3Name .'  &');
+//        $str = "ffmpeg -i ".$amr." ".$mp3Name;
+        exec("ffmpeg -i ".$amr." ".$mp3Name);
+        Yii::$app->redis->set('mp3name',$mp3Name);
         return $mp3Name;
     }
 
     /**
-     * 根据URL地址，下载文件
-     *
-     * @param $url
-     * @param $savePath
-     */
-    public function downAndSaveFile($url,$savePath)
-    {
-        ob_start();
-        readfile($url);
-        $img  = ob_get_contents();
-        ob_end_clean();
-        $size = strlen($img);
-        $fp = fopen($savePath, 'a');
-        fwrite($fp, $img);
-        fclose($fp);
-    }
-
-    /**
      * 删除本地音频文件
-     *
      * @param $filename
      * @return bool
-     * @throws ParameterException
      */
     public function deleteDownloadFile($filename)
     {
         if (!unlink($filename)){
-            throw new ParameterException([
-                'msg' => "Error deleting $filename"
-            ]);
+            return false;
         }else{
             return true;
         }
@@ -400,7 +440,7 @@ class UploadController extends BaseController
         $resource = new WeliveResource();
 
         if(is_array($filelist)){
-            $now = date('Y-m-d H:i:s');
+            $now = time();
             foreach ($filelist as $key => $value){
                 $resource->course_id = $course_id;
                 $resource->blind_id = $blind_id;
@@ -435,7 +475,7 @@ class UploadController extends BaseController
             $condition = ['in', 'url', $urlArr];
             $res = WeliveResource::deleteAll($condition);
             if ($res) {
-                return JsonResult::success($ossRes);
+                return JsonResult::success($res);
             }
             return JsonResult::error($this->errorMsg[-7],$this->errorMsg[-7]);
         }

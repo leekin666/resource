@@ -843,35 +843,112 @@
             });
         }, 300);
     }
-
-    //上传录音
-    function uploadVoice() {
-        //调用微信的上传录音接口把本地录音先上传到微信的服务器
-        //不过，微信只保留3天，而我们需要长期保存，我们需要把资源从微信服务器下载到自己的服务器
-        wx.uploadVoice({
-            localId: voice.localId, // 需要上传的音频的本地ID，由stopRecord接口获得
-            isShowProgressTips: 1, // 默认为1，显示进度提示
-            success: function(res) {
-                //把录音在微信服务器上的id（res.serverId）发送到自己的服务器供下载。
+    function getMediaUrl(mediaId){
+        // alert(mediaId);
+        $.ajax({
+            url: 'http://res.iawim.com/upload/get-media-url',
+            type: 'post',
+            async: "false",
+            data: {mediaid: mediaId},
+            dataType: "json",
+            success: function(msg) {
+                alert(msg.data.url);
+                if (msg.code==0){
                     $.ajax({
                         url: 'http://res.iawim.com/upload/audio',
                         type: 'post',
                         async: "false",
-                        data: {mediaid: res.serverId},
+                        data: {media_url: msg.data.url,room_id:1},
+                        // data: {mediaid: res.serverId},
                         dataType: "json",
                         success: function(msg) {
                             if (msg.code==0){
-                                alert('success');
+                                alert('success!url:'+msg.data.url);
+                            }else{
+                                alert(msg.message);
                             }
                         },
                         error: function(xhr, errorType, error) {
                             console.log(error);
                         }
                     });
+                }
+            }
+        });
+    }
+    //上传录音
+    function uploadVoice() {
+        //调用微信的上传录音接口把本地录音先上传到微信的服务器
+        //不过，微信只保留3天，而我们需要长期保存，我们需要把资源从微信服务器下载到自己的服务器
+        // alert('localID:'+voice.localId);
+        wx.uploadVoice({
+            localId: voice.localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: function(res) {
+                //把录音在微信服务器上的id（res.serverId）发送到自己的服务器供下载。
+                //     alert('serverId:'+res.serverId);
+                    // test(res.serverId);
+                getMediaUrl(res.serverId);
+                    // alert(res.mediaUrl);
+                    // $.ajax({
+                    //     url: 'http://res.iawim.com/upload/audio',
+                    //     type: 'post',
+                    //     async: "false",
+                    //     data: {media_url: res.mediaUrl},
+                    //     // data: {mediaid: res.serverId},
+                    //     dataType: "json",
+                    //     success: function(msg) {
+                    //         if (msg.code==0){
+                    //             alert('success');
+                    //         }
+                    //     },
+                    //     error: function(xhr, errorType, error) {
+                    //         console.log(error);
+                    //     }
+                    // });
             }
         });
     }
 
+    function test22(mediaId){
+        var promise1 = $.ajax({
+            url: 'http://res.iawim.com/upload/get-media-url',
+            type: 'post',
+            async: "false",
+            data: {mediaid: mediaId},
+            dataType: "json",
+            success: function(msg) {
+                if (msg.code==0){
+                    return msg.data.url;
+                }
+
+            }
+        });
+
+        var promise2 = promise1.then(function(data){
+            return  $.ajax({
+                url: 'http://res.iawim.com/upload/audio',
+                type: 'post',
+                async: "false",
+                data: {media_url: data,room_id:1},
+                // data: {mediaid: res.serverId},
+                dataType: "json",
+                success: function(msg) {
+                    if (msg.code==0){
+                        alert('success!url:'+msg.data.url);
+                    }else{
+                        alert(msg.message);
+                    }
+                }
+            });
+        });
+        promise2.done(function(data){
+            if (msg.code==0){
+                alert('success!url:'+msg.data.url);
+            }
+        });
+
+    }
 
 </script>
 
