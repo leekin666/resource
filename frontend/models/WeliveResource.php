@@ -26,13 +26,10 @@ class WeliveResource extends ActiveRecord
         return [
             'id', 
             'room_id',
-            'blind_id', 
             'sort_id',
-            'res_type', 
             'file_mimetype', 
             'file_name', 
-            'file_type', 
-            'file_phy_name', 
+            'file_type',
             'file_size', 
             'url', 
             'create_datetime'
@@ -43,8 +40,8 @@ class WeliveResource extends ActiveRecord
     {
         parent::rules();
         return [
-            [['room_id', 'res_type', 'file_type', 'sort_id', 'url', 'file_name'], 'required'],
-            [['room_id', 'blind_id', 'sort_id'], 'integer'],
+            [['room_id', 'file_type', 'sort_id', 'url', 'file_name'], 'required'],
+            [['room_id', 'sort_id'], 'integer'],
             [['create_datetime'], 'safe'],
         ];
     }
@@ -53,7 +50,6 @@ class WeliveResource extends ActiveRecord
     {
         return [
             'room_id' => 'Room ID',
-            'res_type' => 'Res Type',
             'file_type' => 'File Type',
             'url' => 'Url',
             'file_name' => 'File Name',
